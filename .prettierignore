@@ -1,0 +1,4 @@
+node_modules/
+.validation/
+*.tgz
+package-lock.json

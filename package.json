@@ -1,0 +1,53 @@
+{
+  "name": "opencode-llmapi-custom-headers",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts",
+    "./rpc": "./src/rpc.ts",
+    "./tui": "./src/tui.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "docs",
+    "examples",
+    "README.md",
+    "README.en.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "CONTRIBUTING.md",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts",
+    "prepack": "npm run verify",
+    "test:host": "tsx tools/host-wire.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "verify": "npm run format:check && npm run check && npm test"
+  },
+  "dependencies": {
+    "@opencode/plugin": "2.3.0",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "prettier": "3.10.1",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3"
+  },
+  "description": "OpenCode V2 TUI plugin for custom LLM routes, API headers and model discovery.",
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "llm",
+    "custom-headers",
+    "tui"
+  ],
+  "engines": {
+    "node": ">=22"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "providers": {
+    "gateway": {
+      "displayName": "Gateway",
+      "api": "openai-completions",
+      "baseURL": "https://gateway.example/v1",
+      "headers": {
+        "User-Agent": "codex_cli_rs/0.169.0-alpha.11.1",
+        "originator": "codex_cli_rs"
+      },
+      "models": [
+        {
+          "id": "model-name",
+          "contextWindow": 262144,
+          "maxTokens": 32768,
+          "input": ["text", "image"],
+          "reasoningEfforts": {
+            "low": "low",
+            "high": "high"
+          }
+        }
+      ]
+    }
+  }
+}
