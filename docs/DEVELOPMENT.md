@@ -2,7 +2,11 @@
 
 ## 环境
 
-Node.js 22+、npm、OpenCode 2.3.0。使用 npm ci 和已提交的 lockfile。SDK 必须精确固定版本，不使用 latest 或兼容 shim。
+Node.js 22+、npm、OpenCode 2.3.2。使用 npm ci 和已提交的 lockfile。SDK 必须精确固定版本，不使用 latest 或兼容 shim。
+
+多行编辑器原生渲染检查：安装 Bun 1.3.14+ 后执行 `npm run test:tui`（本机使用 Bun 1.4.3）。该检查覆盖多行粘贴、换行、缩进、全选、校验失败保留输入、保存、小窗口自适应及弹窗关闭取消。普通 Node.js 逻辑测试不加载原生编辑器；OpenTUI 的 Node 原生 FFI 需要 Node 26.4+，Node 22/24 开发环境应使用 Bun 执行渲染检查。
+
+`@opencode/theme` 是用于检查宿主主题 API 的开发依赖，不能省略：2.3.2 的 `theme.text` 是颜色集合，应取 `text.base` 等叶子颜色。渲染测试应使用同样的嵌套结构；组件测试之后仍需在真实 OpenCode 中测试加载与交互，避免宿主上下文差异被测试环境掩盖。
 
 ```sh
 npm ci

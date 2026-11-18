@@ -1,3 +1,7 @@
 import { Plugin } from "@opencode/plugin/tui";
 import { setup } from "./tui/management.js";
-export default Plugin.define({ id: "llmapi-custom-headers", setup });
+import { multilineEditor } from "./tui/multiline-editor.js";
+export default Plugin.define({
+  id: "llmapi-custom-headers",
+  setup: (ctx) => setup(ctx, (options) => multilineEditor(ctx, options)),
+});

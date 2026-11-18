@@ -21,7 +21,6 @@ const attributionHeaders = () => ({
 /** One model the endpoint reports about itself. */
 export interface DiscoveredModel {
   id: string;
-  name?: string;
   contextWindow?: number;
   maxTokens?: number;
 }
@@ -122,7 +121,6 @@ export function parseListing(body: unknown): DiscoveredModel[] {
     const id = label(key, raw.id);
     if (id === undefined || seen.has(id)) continue;
     seen.add(id);
-    const name = label(raw.name, raw.display_name, raw.displayName);
     const contextWindow = capacity(
       raw.contextWindow,
       raw.context_window,
@@ -141,7 +139,6 @@ export function parseListing(body: unknown): DiscoveredModel[] {
     );
     models.push({
       id,
-      ...(name === undefined ? {} : { name }),
       ...(contextWindow === undefined ? {} : { contextWindow }),
       ...(maxTokens === undefined ? {} : { maxTokens }),
     });
@@ -278,7 +275,7 @@ export async function probeModels(
       await response.body?.cancel().catch(() => {});
       const hint =
         response.status === 401 || response.status === 403
-          ? "; check the API key behind apiKeyEnv"
+          ? "; check the route API key in /connect"
           : "";
       throw new LlmError(
         `${url} answered ${response.status}${hint}`,

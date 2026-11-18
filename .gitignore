@@ -2,3 +2,8 @@ node_modules/
 dist/
 *.tgz
 .validation/
+.env
+.env.*
+!.env.example
+*.log
+coverage/

@@ -9,10 +9,12 @@ export type SupportedProtocol = z.infer<typeof protocol>;
 export const modelSchema = z
   .object({
     id: z.string().min(1),
-    name: z.string().optional(),
     contextWindow: z.number().int().positive().default(262144),
     maxTokens: z.number().int().positive().default(32768),
-    input: z.array(z.enum(["text", "image"])).default(["text"]),
+    input: z
+      .array(z.enum(["text", "image"]))
+      .min(1)
+      .default(["text"]),
     reasoningEfforts: z
       .union([z.literal(false), z.record(z.string(), z.string().nullable())])
       .optional(),
@@ -20,12 +22,10 @@ export const modelSchema = z
   .strict();
 export const routeSchema = z
   .object({
-    displayName: z.string().optional(),
     api: protocol,
     baseURL: z.url().refine((s) => /^https?:/.test(s)),
-    credential: z.string().min(1).optional(),
-    headers: z.record(z.string(), z.string()).default({}),
     models: z.array(modelSchema).default([]),
+    headers: z.record(z.string(), z.string()).default({}),
   })
   .strict()
   .superRefine((r, c) => {
@@ -58,7 +58,38 @@ export const configSchema = z
   .strict();
 export type Config = z.infer<typeof configSchema>;
 export type Route = z.infer<typeof routeSchema>;
-// Strict schemas deliberately reject legacy fields without an equivalent, never silently drop them.
+// Loading removes retired naming/sharing fields; new saves still use the strict schema.
 export function migrateConfig(input: unknown): Config {
-  return configSchema.parse(input);
+  if (typeof input !== "object" || input === null || Array.isArray(input))
+    return configSchema.parse(input);
+  const value = input as Record<string, unknown>;
+  if (
+    typeof value.providers !== "object" ||
+    value.providers === null ||
+    Array.isArray(value.providers)
+  )
+    return configSchema.parse(input);
+  const providers = Object.fromEntries(
+    Object.entries(value.providers).map(([id, raw]) => {
+      if (typeof raw !== "object" || raw === null || Array.isArray(raw))
+        return [id, raw];
+      const { displayName, credential, ...route } = raw as Record<
+        string,
+        unknown
+      >;
+      if (Array.isArray(route.models))
+        route.models = route.models.map((model) => {
+          if (
+            typeof model !== "object" ||
+            model === null ||
+            Array.isArray(model)
+          )
+            return model;
+          const { name, ...rest } = model as Record<string, unknown>;
+          return rest;
+        });
+      return [id, route];
+    }),
+  );
+  return configSchema.parse({ ...value, providers });
 }

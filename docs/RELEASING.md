@@ -1,11 +1,11 @@
 # 发布流程
 
-当前发布基线：v0.1.0。package.json 和 package-lock.json 使用 0.1.0；Git tag（如使用）为 v0.1.0。配置版本仍为 1，不随包版本变化。
+当前发布基线：v0.1.1。package.json 和 package-lock.json 使用 0.1.1；Git tag（如使用）为 v0.1.1。配置版本仍为 1，不随包版本变化。
 
 1. 更新变更记录、兼容矩阵和用户文档。
-2. 同步 manifest/lockfile 版本，执行 npm ci 与 npm run verify。
+2. 同步 manifest/lockfile 版本，执行 npm ci 与 npm run verify:release（需要 Bun 1.4.3）。
 3. 使用目标 OpenCode 对真实 TUI、集成/密钥、模型目录和请求头做回归，记录未完成范围。
-4. npm pack（prepack 自动执行 verify），检查 tarball 清单和独立安装加载。
+4. npm pack（prepack 自动执行 verify:release），检查 tarball 清单和独立安装加载；记录 SHA-256。包检查包括版本、lockfile、导出入口和文件白名单。
 5. 核对无密钥、个人路径、数据库、本机测试配置或旧安装包。
 6. 按维护者的仓库/发布目标创建版本标签和上传产物。当前任务仅生成本地包，不自动发布或创建标签。
 

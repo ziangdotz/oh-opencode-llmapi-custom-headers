@@ -1,4 +1,4 @@
-// Run against an isolated OpenCode 2.3.0 service with this plugin installed.
+// Run against an isolated OpenCode 2.3.2 service with this plugin installed.
 // Requires an explicitly selected isolated service; temporarily replaces its configuration.
 import { OpenCode } from "@opencode/client";
 import { HeadersRpc } from "../src/rpc.js";

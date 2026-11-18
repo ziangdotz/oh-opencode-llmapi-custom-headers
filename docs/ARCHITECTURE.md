@@ -27,7 +27,7 @@ src/
 
 TUI 读取当前目录配置 → 在本地校验输入 → RPC 携带 revision 保存 → plugin storage 持久化 → 集成/Provider/Model 刷新 → TUI 同步缓存。
 
-凭据始终由 OpenCode 管理。每条路由的 Provider ID 是 `llmapi-<id>`，默认集成 ID 相同。设置 credential 时，Provider 和请求头解析改为引用该集成；不重命名或修改共享集成的方法。
+凭据由 OpenCode 管理。每条路由的 Provider ID 和集成 ID 均为 llmapi-<id>，不支持共享集成引用。路由与模型仅使用 ID 展示。
 
 请求头在模型请求、最终 HTTP 请求、WebSocket 握手处注入；配置值优先于自动鉴权头。发现请求也使用凭据与路由请求头。
 

@@ -2,7 +2,6 @@
   "version": 1,
   "providers": {
     "gateway": {
-      "displayName": "Gateway",
       "api": "openai-completions",
       "baseURL": "https://gateway.example/v1",
       "headers": {

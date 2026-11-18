@@ -23,7 +23,6 @@ export const HeadersRpc = Rpc.define({
       output: z.array(
         z.object({
           id: z.string(),
-          name: z.string().optional(),
           contextWindow: z.number().optional(),
           maxTokens: z.number().optional(),
         }),

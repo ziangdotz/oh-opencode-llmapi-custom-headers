@@ -10,8 +10,8 @@ export function registerProviders(ctx: Plugin.Context, get: () => Config) {
       editor.add({
         info: {
           ...Provider.Info.empty(providerID),
-          name: r.displayName ?? id,
-          integrationID: Integration.ID.make(r.credential ?? `llmapi-${id}`),
+          name: id,
+          integrationID: Integration.ID.make(`llmapi-${id}`),
           activation: "enabled",
           package:
             r.api === "anthropic-messages"
@@ -24,7 +24,7 @@ export function registerProviders(ctx: Plugin.Context, get: () => Config) {
         },
         models: r.models.map((m) => ({
           ...Model.Info.default(providerID, Model.ID.make(m.id)),
-          name: m.name ?? m.id,
+          name: m.id,
           capabilities: { tools: true, input: m.input, output: ["text"] },
           limit: { context: m.contextWindow, output: m.maxTokens },
           variants: m.reasoningEfforts

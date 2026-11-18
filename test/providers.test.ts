@@ -3,14 +3,13 @@ import assert from "node:assert/strict";
 import type { Plugin } from "@opencode/plugin";
 import { configSchema } from "../src/core/config.js";
 import { registerProviders } from "../src/server/providers.js";
-test("custom and shared credential integrations are associated with their provider", async () => {
+test("each route uses its own integration", async () => {
   const config = configSchema.parse({
     providers: {
       own: { api: "openai-responses", baseURL: "https://example.com" },
       shared: {
         api: "openai-completions",
         baseURL: "https://example.com",
-        credential: "existing",
       },
     },
   });
@@ -31,7 +30,7 @@ test("custom and shared credential integrations are associated with their provid
     added.map((p) => [p.info.id, p.info.integrationID]),
     [
       ["llmapi-own", "llmapi-own"],
-      ["llmapi-shared", "existing"],
+      ["llmapi-shared", "llmapi-shared"],
     ],
   );
 });

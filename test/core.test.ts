@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { configSchema } from "../src/core/config.js";
+import { configSchema, migrateConfig } from "../src/core/config.js";
 import { ConfigStore } from "../src/server/storage.js";
 import {
   mergeHeadersCaseInsensitive,
@@ -104,4 +104,80 @@ test("discovery sends configured headers with highest precedence on actual HTTP"
       server.close((e) => (e ? reject(e) : resolve())),
     );
   }
+});
+
+test("removed naming and shared integration fields are rejected on save", () => {
+  for (const extra of [
+    { displayName: "old" },
+    { credential: "shared" },
+    { models: [{ id: "m", name: "old" }] },
+  ])
+    assert.equal(
+      configSchema.safeParse({ providers: { test: { ...route, ...extra } } })
+        .success,
+      false,
+    );
+});
+test("existing storage migrates removed fields without changing route or model IDs", async () => {
+  const store = new ConfigStore({
+    get: async () => ({
+      revision: 4,
+      config: {
+        providers: {
+          test: {
+            ...route,
+            displayName: "old",
+            credential: "shared",
+            models: [{ id: "model", name: "old", input: ["text", "image"] }],
+          },
+        },
+      },
+    }),
+    set: async () => {},
+    remove: async () => {},
+    scan: async () => ({ entries: [] }),
+  });
+  await store.load({});
+  assert.equal(store.revision, 4);
+  assert.equal("credential" in store.config.providers.test, false);
+  assert.equal("displayName" in store.config.providers.test, false);
+  assert.equal("name" in store.config.providers.test.models[0], false);
+  assert.deepEqual(store.config.providers.test.models[0].input, [
+    "text",
+    "image",
+  ]);
+});
+
+test("corrupt storage revisions are rejected without writes or replacement", async () => {
+  for (const revision of [-1, 1.5, "2", Number.MAX_SAFE_INTEGER + 1]) {
+    let writes = 0;
+    const store = new ConfigStore({
+      get: async () => ({ revision, config: {} }),
+      set: async () => {
+        writes++;
+      },
+      remove: async () => {},
+      scan: async () => ({ entries: [] }),
+    });
+    await assert.rejects(() => store.load({}));
+    assert.equal(writes, 0);
+    assert.equal(store.revision, 0);
+  }
+});
+test("migration does not reinterpret arrays as configuration records", () => {
+  for (const value of [
+    [],
+    { providers: [] },
+    { providers: { route: [] } },
+    {
+      providers: {
+        route: {
+          api: "openai-completions",
+          baseURL: "https://example.com",
+          models: [[]],
+        },
+      },
+    },
+  ])
+    assert.throws(() => migrateConfig(value));
 });

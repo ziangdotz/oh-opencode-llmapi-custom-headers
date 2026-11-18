@@ -12,15 +12,14 @@ export default Plugin.define({
     await store.load(ctx.options);
     const provider = await registerProviders(ctx, () => store.config);
     const integration = await ctx.integration.transform((editor) => {
-      for (const [id, r] of Object.entries(store.config.providers)) {
-        if (r.credential) continue; // Shared integrations keep their existing methods and name.
+      for (const id of Object.keys(store.config.providers)) {
         const integrationID = `llmapi-${id}`;
         editor.method.update({
           integrationID,
           method: { type: "key", label: "API key / API 密钥" },
         });
         editor.update(integrationID, (value) => {
-          value.name = `LLM API Custom Headers · ${r.displayName ?? id}`;
+          value.name = `LLM API Custom Headers · ${id}`;
         });
       }
     });
@@ -32,7 +31,7 @@ export default Plugin.define({
     const headersFor = async (id: string) => {
       const r = routeFor(id);
       if (!r) return undefined;
-      const key = await resolveKey(ctx, r, id);
+      const key = await resolveKey(ctx, id);
       return mergeHeadersCaseInsensitive(
         key
           ? r.api === "anthropic-messages"
@@ -79,7 +78,8 @@ export default Plugin.define({
               revision,
               saved: true,
               refreshed: false,
-              message: "Saved; provider refresh failed. Retry refresh.",
+              message:
+                "Saved; refresh failed. Retry refresh / 已保存，刷新失败，请重试刷新。",
             };
           }
         },
@@ -94,7 +94,7 @@ export default Plugin.define({
           if (!r) throw new Error("Route not found");
           return probeModels({
             ...r,
-            apiKey: await resolveKey(ctx, r, "llmapi-" + input.route),
+            apiKey: await resolveKey(ctx, "llmapi-" + input.route),
             signal: call.signal,
           });
         },

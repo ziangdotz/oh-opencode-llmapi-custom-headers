@@ -1,5 +1,12 @@
 import type { Plugin } from "@opencode/plugin";
-import { configSchema, type Config } from "../core/config.js";
+import { configSchema, migrateConfig, type Config } from "../core/config.js";
+import { z } from "zod";
+const savedStateSchema = z
+  .object({
+    revision: z.number().int().nonnegative().safe(),
+    config: z.unknown(),
+  })
+  .strict();
 export class ConfigStore {
   private pending: Promise<unknown> = Promise.resolve();
   revision = 0;
@@ -7,11 +14,11 @@ export class ConfigStore {
   constructor(private storage: Plugin.Context["storage"]) {}
   async load(options: unknown) {
     const saved = await this.storage.get("configuration");
-    if (saved) {
-      const state = saved as { revision: number; config: unknown };
-      this.config = configSchema.parse(state.config);
+    if (saved !== undefined && saved !== null) {
+      const state = savedStateSchema.parse(saved);
+      this.config = migrateConfig(state.config);
       this.revision = state.revision;
-    } else this.config = configSchema.parse(options);
+    } else this.config = migrateConfig(options ?? {});
   }
   save(revision: number, input: unknown) {
     const run = this.pending.then(async () => {
