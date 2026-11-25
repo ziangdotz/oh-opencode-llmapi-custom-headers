@@ -4,12 +4,15 @@ import { spawnSync } from "node:child_process";
 
 const manifest = JSON.parse(readFileSync("package.json", "utf8"));
 const lock = JSON.parse(readFileSync("package-lock.json", "utf8"));
-assert.equal(manifest.version, "0.1.1");
+assert.equal(manifest.version, "0.1.0");
 assert.equal(lock.version, manifest.version);
 assert.equal(lock.packages[""].version, manifest.version);
 assert.deepEqual(lock.packages[""].dependencies, manifest.dependencies);
 assert.deepEqual(lock.packages[""].devDependencies, manifest.devDependencies);
-assert.equal(manifest.devDependencies["@opencode/plugin"], "2.3.2");
+assert.equal(manifest.devDependencies["@opencode/plugin"], "2.4.1");
+assert.equal(manifest.devDependencies["@opencode/theme"], "2.4.1");
+assert.equal(manifest.devDependencies["@opentui/core"], "0.9.4");
+assert.equal(manifest.devDependencies["@opentui/solid"], "0.9.4");
 assert.ok(
   !manifest.dependencies["@opencode/plugin"],
   "SDK must be supplied by the host, not installed as a production dependency",

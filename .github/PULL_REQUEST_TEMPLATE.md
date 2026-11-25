@@ -1,13 +1,21 @@
 ## Problem and behavior
 
-Describe the trigger and resulting behavior.
+Describe the trigger, the previous behavior and the resulting behavior.
+
+## Compatibility
+
+- Plugin version stays `0.1.0` unless explicitly authorized.
+- Configuration schema / migration impact:
+- Host or SDK version impact:
 
 ## Validation
 
 - [ ] `npm run verify:release`
-- [ ] Real OpenCode 2.3.2 regression for changed host interactions
+- [ ] `npm run test:host:smoke` against an isolated OpenCode 2.4.1 service
+- [ ] Real OpenCode 2.4.1 terminal regression for changed host interactions
 - [ ] Configuration compatibility and migration reviewed
 - [ ] User-facing text follows English / 中文
 - [ ] Documentation and CHANGELOG updated
+- [ ] No API keys, private endpoints, databases or full user configurations included
 
-Do not include API keys, private endpoints, or full user configurations.
+Model invocation tests are not implied by this checklist. If any were run, state the authorization, isolated environment and scope explicitly.

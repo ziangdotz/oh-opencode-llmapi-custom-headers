@@ -1,6 +1,6 @@
 {
   "name": "opencode-llmapi-custom-headers",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "type": "module",
   "license": "MIT",
   "exports": {
@@ -30,6 +30,7 @@
     "verify:release": "npm run verify && npm run test:tui && npm run check:package",
     "prepack": "npm run verify:release",
     "test:host": "tsx tools/host-wire.ts",
+    "test:host:smoke": "tsx tools/host-smoke.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "verify": "npm run format:check && npm run check && npm test"
@@ -38,10 +39,10 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
-    "@opencode/plugin": "2.3.2",
-    "@opencode/theme": "2.3.2",
-    "@opentui/core": "0.8.4",
-    "@opentui/solid": "0.8.4",
+    "@opencode/plugin": "2.4.1",
+    "@opencode/theme": "2.4.1",
+    "@opentui/core": "0.9.4",
+    "@opentui/solid": "0.9.4",
     "@types/node": "24.10.1",
     "prettier": "3.10.1",
     "solid-js": "1.9.17",

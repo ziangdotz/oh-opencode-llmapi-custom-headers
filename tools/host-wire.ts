@@ -1,5 +1,7 @@
-// Run against an isolated OpenCode 2.3.2 service with this plugin installed.
+// Run against an isolated OpenCode 2.4.1 service with this plugin installed.
 // Requires an explicitly selected isolated service; temporarily replaces its configuration.
+// This script calls experimental.generate.text, so it is a model invocation test.
+// For a no-model host check, use tools/host-smoke.ts instead.
 import { OpenCode } from "@opencode/client";
 import { HeadersRpc } from "../src/rpc.js";
 import { createServer } from "node:http";

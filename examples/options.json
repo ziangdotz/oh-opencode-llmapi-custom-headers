@@ -20,6 +20,35 @@
           }
         }
       ]
+    },
+    "responses": {
+      "api": "openai-responses",
+      "baseURL": "https://responses.example/v1",
+      "headers": {},
+      "models": [
+        {
+          "id": "responses-model",
+          "contextWindow": 131072,
+          "maxTokens": 8192,
+          "input": ["text"],
+          "reasoningEfforts": {
+            "medium": "medium"
+          }
+        }
+      ]
+    },
+    "anthropic": {
+      "api": "anthropic-messages",
+      "baseURL": "https://anthropic.example",
+      "headers": {},
+      "models": [
+        {
+          "id": "claude-compatible-model",
+          "contextWindow": 200000,
+          "maxTokens": 8192,
+          "input": ["text", "image"]
+        }
+      ]
     }
   }
 }
