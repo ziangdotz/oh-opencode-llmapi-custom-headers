@@ -1,4 +1,4 @@
-// No-model host smoke check. Run against an isolated OpenCode 2.4.1 service
+// No-model host smoke check. Run against an isolated OpenCode 2.4.2 service
 // with this plugin installed. It reads and temporarily replaces the isolated
 // service configuration, verifies provider/model registration, then restores.
 // It never calls a model or a remote model-listing endpoint.

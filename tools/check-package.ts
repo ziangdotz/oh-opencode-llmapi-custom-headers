@@ -9,10 +9,10 @@ assert.equal(lock.version, manifest.version);
 assert.equal(lock.packages[""].version, manifest.version);
 assert.deepEqual(lock.packages[""].dependencies, manifest.dependencies);
 assert.deepEqual(lock.packages[""].devDependencies, manifest.devDependencies);
-assert.equal(manifest.devDependencies["@opencode/plugin"], "2.4.1");
-assert.equal(manifest.devDependencies["@opencode/theme"], "2.4.1");
-assert.equal(manifest.devDependencies["@opentui/core"], "0.9.4");
-assert.equal(manifest.devDependencies["@opentui/solid"], "0.9.4");
+assert.equal(manifest.devDependencies["@opencode/plugin"], "2.4.2");
+assert.equal(manifest.devDependencies["@opencode/theme"], "2.4.2");
+assert.equal(manifest.devDependencies["@opentui/core"], "0.9.9");
+assert.equal(manifest.devDependencies["@opentui/solid"], "0.9.9");
 assert.ok(
   !manifest.dependencies["@opencode/plugin"],
   "SDK must be supplied by the host, not installed as a production dependency",

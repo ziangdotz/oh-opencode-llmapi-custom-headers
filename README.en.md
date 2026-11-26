@@ -1,6 +1,6 @@
 # opencode-llmapi-custom-headers
 
-**OpenCode V2 plugin · v0.1.0 · host baseline 2.4.1**
+**OpenCode V2 plugin · v0.1.0 · host baseline 2.4.2**
 
 Manage custom LLM routes, HTTP headers and model catalogs from the OpenCode terminal. One package provides the server plugin, the TUI management surface and a typed RPC contract, with `/llmapi-custom-headers` as the single entry point.
 
@@ -10,7 +10,7 @@ Supported wire protocols:
 - OpenAI Responses (`openai-responses`)
 - Anthropic Messages (`anthropic-messages`)
 
-> **Delivery status**: this build adapts the plugin to the locally installed OpenCode 2.4.1 and completes engineering verification. **No model generation call or remote model discovery was executed.** Validate real credentials, full streaming responses, image input and live WebSocket sessions in your own environment; see [Validation and compatibility](docs/VALIDATION.md).
+> **Delivery status**: this build adapts the plugin to the locally installed OpenCode 2.4.2 and completes engineering verification. **No model generation call or remote model discovery was executed.** Validate real credentials, full streaming responses, image input and live WebSocket sessions in your own environment; see [Validation and compatibility](docs/VALIDATION.md).
 
 ## Compatibility
 
@@ -18,10 +18,10 @@ Supported wire protocols:
 | ------------------------ | ------------------------------- |
 | Plugin                   | `0.1.0` (published as `v0.1.0`) |
 | Configuration schema     | `1`                             |
-| Local OpenCode           | `2.4.1`                         |
-| `@opencode/plugin` (dev) | `2.4.1`                         |
-| `@opencode/theme` (dev)  | `2.4.1`                         |
-| OpenTUI (dev)            | `0.9.4`                         |
+| Local OpenCode           | `2.4.2`                         |
+| `@opencode/plugin` (dev) | `2.4.2`                         |
+| `@opencode/theme` (dev)  | `2.4.2`                         |
+| OpenTUI (dev)            | `0.9.9`                         |
 | Node.js (development)    | `>=22`                          |
 | Bun (native TUI tests)   | `1.4.3` (minimum `1.3.14`)      |
 
@@ -44,7 +44,7 @@ The plugin performs no background polling and sends no telemetry. It contacts th
 
 ### Prerequisites
 
-1. OpenCode 2.4.1 installed; `opencode --version` works.
+1. OpenCode 2.4.2 installed; `opencode --version` works.
 2. Node.js 22+ and npm for local development.
 3. Bun 1.3.14+ for native TUI render checks; this project was verified with Bun 1.4.3.
 

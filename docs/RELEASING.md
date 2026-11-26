@@ -19,8 +19,8 @@
 
 1. [ ] 变更记录、兼容矩阵和用户文档已更新。
 2. [ ] `package.json`、`package-lock.json` 的项目版本均为 `0.1.0`。
-3. [ ] `@opencode/plugin` 和 `@opencode/theme` 固定到目标宿主版本（当前 `2.4.1`）。
-4. [ ] `@opentui/core` 和 `@opentui/solid` 固定到验证版本（当前 `0.9.4`）。
+3. [ ] `@opencode/plugin` 和 `@opencode/theme` 固定到目标宿主版本（当前 `2.4.2`）。
+4. [ ] `@opentui/core` 和 `@opentui/solid` 固定到验证版本（当前 `0.9.9`）。
 5. [ ] 锁文件与 manifest 的 dependencies/devDependencies 一致。
 6. [ ] 执行 `npm ci`。
 7. [ ] 执行 `npm run verify:release`。
@@ -54,7 +54,7 @@ format:check
 
 - 项目版本为 `0.1.0`。
 - 锁文件根版本和依赖字段与 manifest 一致。
-- `@opencode/plugin` 为 `2.4.1`，且不在生产依赖中。
+- `@opencode/plugin` 为 `2.4.2`，且不在生产依赖中。
 - 发布包只包含白名单文件。
 - 所有 `exports` 目标都存在。
 - 多行编辑器源码包含在包内。

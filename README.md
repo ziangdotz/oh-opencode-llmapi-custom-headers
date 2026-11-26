@@ -1,6 +1,6 @@
 # opencode-llmapi-custom-headers
 
-**OpenCode V2 插件 · v0.1.0 · 宿主基线 2.4.1**
+**OpenCode V2 插件 · v0.1.0 · 宿主基线 2.4.2**
 
 在 OpenCode 终端中管理自定义 LLM 路由、请求头和模型目录。一个包同时提供 Server 插件、TUI 管理界面和类型化 RPC 契约，统一入口为 `/llmapi-custom-headers`。
 
@@ -10,7 +10,7 @@
 - OpenAI Responses（`openai-responses`）
 - Anthropic Messages（`anthropic-messages`）
 
-> **交付状态**：本版本完成对本地 OpenCode 2.4.1 的适配和工程验证，**未执行任何模型生成调用或远端模型发现**。真实密钥、完整流式响应、图片输入和 WebSocket 实连需由使用者在自己的环境中验收，详见 [验证与兼容性](docs/VALIDATION.md)。
+> **交付状态**：本版本完成对本地 OpenCode 2.4.2 的适配和工程验证，**未执行任何模型生成调用或远端模型发现**。真实密钥、完整流式响应、图片输入和 WebSocket 实连需由使用者在自己的环境中验收，详见 [验证与兼容性](docs/VALIDATION.md)。
 
 ## 兼容性
 
@@ -18,10 +18,10 @@
 | ------------------------ | ------------------------ |
 | 插件版本                 | `0.1.0`（对外 `v0.1.0`） |
 | 配置 schema              | `1`                      |
-| 本地 OpenCode            | `2.4.1`                  |
-| `@opencode/plugin` (dev) | `2.4.1`                  |
-| `@opencode/theme` (dev)  | `2.4.1`                  |
-| OpenTUI (dev)            | `0.9.4`                  |
+| 本地 OpenCode            | `2.4.2`                  |
+| `@opencode/plugin` (dev) | `2.4.2`                  |
+| `@opencode/theme` (dev)  | `2.4.2`                  |
+| OpenTUI (dev)            | `0.9.9`                  |
 | Node.js（开发/检查）     | `>=22`                   |
 | Bun（原生 TUI 渲染测试） | `1.4.3`（最低 `1.3.14`） |
 
@@ -44,7 +44,7 @@ SDK、主题与 OpenTUI 由 OpenCode 宿主在运行时提供；开发依赖只�
 
 ### 前置条件
 
-1. 已安装 OpenCode 2.4.1，并能执行 `opencode --version`。
+1. 已安装 OpenCode 2.4.2，并能执行 `opencode --version`。
 2. 本地开发需要 Node.js 22+ 和 npm。
 3. 原生 TUI 渲染检查需要 Bun 1.3.14+；本项目在 Bun 1.4.3 上验证。
 

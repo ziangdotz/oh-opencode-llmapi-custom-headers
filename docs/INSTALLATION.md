@@ -1,6 +1,6 @@
 # 安装与升级
 
-本文覆盖首次安装、发布包安装、升级、回滚和卸载。目标宿主为 **OpenCode 2.4.1**；插件版本固定为 **0.1.0**，配置 schema 为 **1**。
+本文覆盖首次安装、发布包安装、升级、回滚和卸载。目标宿主为 **OpenCode 2.4.2**；插件版本固定为 **0.1.0**，配置 schema 为 **1**。
 
 ## 1. 环境确认
 
@@ -11,7 +11,7 @@ opencode debug paths
 
 记录以下信息，后续备份和故障排查都需要：
 
-- OpenCode 版本（应为 `2.4.1`）。
+- OpenCode 版本（应为 `2.4.2`）。
 - 配置目录（`config`）。
 - 数据目录（`data`）和数据库路径（`db`）。
 - 日志目录（`log`）。
@@ -126,6 +126,35 @@ C:\opencode-plugins\node_modules\opencode-llmapi-custom-headers
 
 “发现模型”会访问远端目录，应在允许联网时手动执行。真实生成调用、流式响应、图片输入和 WebSocket 实连不在安装检查范围内。
 
+### 自动化无模型检查
+
+开发者可在独立 PowerShell 会话启动隔离宿主，不复制日常配置。以下示例在仓库目录执行；端口须空闲，测试密码只用于本次隔离服务：
+
+```powershell
+$root = Join-Path (Get-Location) '.validation/host-check'
+$env:XDG_CONFIG_HOME = "$root/config"
+$env:XDG_DATA_HOME = "$root/data"
+$env:XDG_CACHE_HOME = "$root/cache"
+$env:XDG_STATE_HOME = "$root/state"
+$env:OPENCODE_SERVER_PASSWORD = 'isolated-test-only'
+New-Item -ItemType Directory -Force "$root/config/opencode", "$root/work" | Out-Null
+$plugin = (Get-Location).Path.Replace('\', '/')
+@{ plugins = @($plugin) } | ConvertTo-Json | Set-Content "$root/config/opencode/opencode.json"
+Set-Location "$root/work"
+opencode serve --hostname 127.0.0.1 --port 19095
+```
+
+在另一 PowerShell 会话回到仓库目录，执行：
+
+```powershell
+$env:OPENCODE_TEST_URL = 'http://127.0.0.1:19095'
+$env:OPENCODE_TEST_ISOLATED = '1'
+$env:OPENCODE_SERVER_PASSWORD = 'isolated-test-only'
+npm run test:host:smoke
+```
+
+结束后在服务会话按 Ctrl+C 停止，并关闭两个会话以撤销临时环境变量。该命令只读取/保存/恢复配置并检查注册；`npm run test:host` 会调用生成接口，不能用于此无模型流程。完整终端交互仍按上节逐项确认。发布包验证时将 `$plugin` 改为隔离安装后的包目录。
+
 ## 6. 升级
 
 升级前：
@@ -142,7 +171,7 @@ C:\opencode-plugins\node_modules\opencode-llmapi-custom-headers
 4. 重启宿主，重复“首次启动检查”。
 5. 如需回滚，恢复插件目录和匹配的数据快照。
 
-宿主升级（例如 2.4.1 → 更高版本）属于单独变更：必须重新执行类型检查、真实宿主加载检查和本文件第 5 节的检查，不能仅凭 `npm run verify` 推断兼容。
+宿主升级（例如 2.4.2 → 更高版本）属于单独变更：必须重新执行类型检查、真实宿主加载检查和本文件第 5 节的检查，不能仅凭 `npm run verify` 推断兼容。
 
 ## 7. 回滚
 

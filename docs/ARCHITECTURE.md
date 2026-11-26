@@ -2,7 +2,7 @@
 
 共同分层、开发流程、文档职责与验证授权见 [统一工程规范](ENGINEERING.md)。项目专属规则见本文。
 
-本文描述插件 `0.1.0` 在 OpenCode `2.4.1` 上的设计边界、生命周期和失败模型。目标不是复刻宿主内部实现，而是说明本插件依赖的公开契约。
+本文描述插件 `0.1.0` 在 OpenCode `2.4.2` 上的设计边界、生命周期和失败模型。目标不是复刻宿主内部实现，而是说明本插件依赖的公开契约。
 
 ## 1. 设计目标
 
@@ -24,12 +24,12 @@
 
 | 契约       | 值                                                     |
 | ---------- | ------------------------------------------------------ |
-| 宿主基线   | OpenCode `2.4.1`                                       |
-| Server SDK | `@opencode/plugin` `2.4.1`（开发依赖，宿主提供运行时） |
+| 宿主基线   | OpenCode `2.4.2`                                       |
+| Server SDK | `@opencode/plugin` `2.4.2`（开发依赖，宿主提供运行时） |
 | TUI SDK    | `@opencode/plugin/tui`                                 |
 | RPC SDK    | `@opencode/plugin/rpc`                                 |
 | 主题类型   | `@opencode/theme/tui`                                  |
-| TUI 渲染   | `@opentui/core` / `@opentui/solid` `0.9.4`（宿主提供） |
+| TUI 渲染   | `@opentui/core` / `@opentui/solid` `0.9.9`（宿主提供） |
 | 包导出     | `.`、`./tui`、`./rpc`、`./package.json`                |
 
 OpenCode 的插件运行时会把 `effect`、`@opencode/plugin` 各入口和 OpenTUI 模块映射到宿主实例，避免同一进程出现多份运行时。插件源码由宿主直接加载，没有打包产物。

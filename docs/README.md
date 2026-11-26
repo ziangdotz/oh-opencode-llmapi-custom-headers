@@ -2,7 +2,7 @@
 
 共同分层、开发流程、文档职责与验证授权见 [统一工程规范](ENGINEERING.md)。项目专属规则见本文。
 
-本目录描述插件 `v0.1.0` 在 OpenCode `2.4.1` 上的设计、安装、配置、验证与运维边界。文档以中文为主，[English README](../README.en.md) 提供英文入口。
+本目录描述插件 `v0.1.0` 在 OpenCode `2.4.2` 上的设计、安装、配置、验证与运维边界。文档以中文为主，[English README](../README.en.md) 提供英文入口。
 
 ## 按角色阅读
 
@@ -40,9 +40,9 @@
 | ------------- | ----------------------------------- |
 | 插件版本      | `0.1.0`                             |
 | 配置 schema   | `1`                                 |
-| 宿主          | OpenCode `2.4.1`                    |
-| SDK / theme   | `2.4.1`（开发依赖，宿主运行时提供） |
-| OpenTUI       | `0.9.4`（开发依赖，宿主运行时提供） |
+| 宿主          | OpenCode `2.4.2`                    |
+| SDK / theme   | `2.4.2`（开发依赖，宿主运行时提供） |
+| OpenTUI       | `0.9.9`（开发依赖，宿主运行时提供） |
 | 插件 ID / RPC | `llmapi-custom-headers`             |
 | storage key   | `configuration`                     |
 | Provider 前缀 | `llmapi-`                           |
